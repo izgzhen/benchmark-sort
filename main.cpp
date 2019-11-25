@@ -13,6 +13,8 @@ int compare_int(const void *a, const void *b) {
 
 int main(int argc, char* argv[]) {
     std::string algo_opt(argv[1]);
+    int interval = read<int>(argv[2]);
+    int max_n = read<int>(argv[3]);
     ALGO algo;
     if (algo_opt == "stdsort") {
         algo = STDSORT;
@@ -24,7 +26,7 @@ int main(int argc, char* argv[]) {
         std::cerr << "Invalid algo_opt: " << algo_opt << "\n";
         exit(-1);
     }
-    for (int n = 10000; n < 1000000; n += 10000) {
+    for (int n = interval; n < max_n; n += interval) {
         // std::vector<float> nums = getRandList(n);
         std::vector<int> nums = getRandIntList(n);
         Timer t;

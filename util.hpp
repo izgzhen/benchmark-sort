@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <sstream>
 #include <iostream>
 #include <vector>
 #include "assert.h"
@@ -27,4 +28,12 @@ std::vector<int> getRandIntList(int N) {
         ret.push_back(rand());
     }
     return ret;
+}
+
+template <class T>
+static T read(const char* value) {
+    std::istringstream stream(value);
+    T out;
+    stream >> out;
+    return out;
 }
