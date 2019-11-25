@@ -1,19 +1,14 @@
 #include "util.hpp"
+#include "quicksort.hpp"
 
 enum ALGO {
     STDSORT,
-    QSORT
+    QSORT,
+    QSORT_BASELINE
 };
 
-int compare_float(const void *a, const void *b) {
-    float delta = ( *(float*)b -  *(float*)a );
-    if (delta > 0) {
-        return -1;
-    } else if (delta < 0) {
-        return 1;
-    } else {
-        return 0;
-    }
+int compare_int(const void *a, const void *b) {
+    return ( *(int*)a -  *(int*)b );
 }
 
 int main(int argc, char* argv[]) {
@@ -23,19 +18,25 @@ int main(int argc, char* argv[]) {
         algo = STDSORT;
     } else if (algo_opt == "qsort") {
         algo = QSORT;
+    } else if (algo_opt == "qsort-baseline") {
+        algo = QSORT_BASELINE;
     } else {
         std::cerr << "Invalid algo_opt: " << algo_opt << "\n";
         exit(-1);
     }
-    for (int n = 0; n < 1000000; n += 10000) {
-        std::vector<float> nums = getRandList(n);
+    for (int n = 10000; n < 1000000; n += 10000) {
+        // std::vector<float> nums = getRandList(n);
+        std::vector<int> nums = getRandIntList(n);
         Timer t;
         switch (algo) {
             case STDSORT:
                 std::sort(nums.begin(), nums.end());
                 break;
             case QSORT:
-                qsort(&nums[0], nums.size(), sizeof(float), compare_float);
+                qsort(&nums[0], nums.size(), sizeof(int), compare_int);
+                break;
+            case QSORT_BASELINE:
+                quickSortBasline<int>(nums.data(), 0, nums.size());
                 break;
             default:
                 std::cerr << "Sort not implemented: " << algo << "\n";

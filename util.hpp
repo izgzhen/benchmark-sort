@@ -1,3 +1,4 @@
+#pragma once
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -20,10 +21,10 @@ private:
     high_resolution_clock::time_point t_;
 };
 
-std::vector<float> getRandList(int N) {
-    std::vector<float> ret;
+std::vector<int> getRandIntList(int N) {
+    std::vector<int> ret;
     for (int i = 0; i < N; i++) {
-        ret.push_back((float)rand() / (float)RAND_MAX);
+        ret.push_back(rand());
     }
     return ret;
 }
