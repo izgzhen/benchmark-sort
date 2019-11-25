@@ -18,4 +18,4 @@ for n in range(interval, max_n, interval):
     xs = [random.randint(0, MAX_INT) for _ in range(n)]
     now = time.time()
     _ = sorted(xs)
-    print(str(n) + " " + str((time.time() - now) / 1e6))
+    print(str(n) + " " + str((time.time() - now) * 1e6))
