@@ -11,6 +11,8 @@ The current (counter-intuitive) observation is that **the complexity of all stan
 
 We all thought that as working programmers, we understand `sort`, but we *might not*. This is why I am motivated to investigate this.
 
+Note that I didn't care a lot about theoretical worse case for pseudo-code, since (1) modern hardware plus complicated hybrid algorithm engineering can produce very different thing than what you imagine (2) in production, the data distribution is not always the worst case, sometimes much better.
+
 ## Results
 
 |       | std::sort                                           | Arrays.sort                                                  | sorted                                            |
@@ -60,6 +62,29 @@ From [this post](https://stackoverflow.com/questions/10948920/what-algorithm-doe
 According to wikipedia,
 
 > **Timsort** is a [hybrid](https://en.wikipedia.org/wiki/Hybrid_algorithm) [stable](https://en.wikipedia.org/wiki/Category:Stable_sorts) [sorting algorithm](https://en.wikipedia.org/wiki/Sorting_algorithm), derived from [merge sort](https://en.wikipedia.org/wiki/Merge_sort) and [insertion sort](https://en.wikipedia.org/wiki/Insertion_sort), designed to perform well on many kinds of real-world data.
+
+## Are there O(n) sorting algorithms *in theory*?
+
+From [this post](https://stackoverflow.com/questions/749585/sorting-in-linear-time):
+
+[pigeonhole sort](http://en.wikipedia.org/wiki/Pigeonhole_sort) or [counting sort](http://en.wikipedia.org/wiki/Counting_sort), as well as [radix sort](http://en.wikipedia.org/wiki/Radix_sort).
+
+[Bucket sort](Wikipedia/Bucket sort) is also linear.
+
+## Related Work
+
+I should not be the first one who observed this. Here are some related posts:
+
+- [C++ 11 sort benchmark](https://solarianprogrammer.com/2012/10/24/cpp-11-sort-benchmark/) by Paul
+    - The graphics in this post looks confirming my observations, but the author didn't suspect the observed asymptotic complexity.
+- [I Wrote a Faster Sorting Algorithm](https://probablydance.com/2016/12/27/i-wrote-a-faster-sorting-algorithm/) by Malte Skarupke
+    - The graphics in this post showed that under `std::uniform_int_distribution`, and observed that `stds::sort` is O(n log n), and claimed that `ska_sort_copy`/`ska_sort` looks like O(n).
+    - I didn't read through the comments, but it seems like there is a lot of materials there
+- [C++ benchmark – std::vector VS std::list VS std::deque](https://baptiste-wicht.com/posts/2012/12/cpp-benchmark-vector-list-deque.html) by Baptiste Wicht
+    - The section about "Sort" seems confirming my observation, but no discussion is given.
+- 
+
+
 
 ## Further Readings
 
