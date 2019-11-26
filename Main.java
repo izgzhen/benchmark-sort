@@ -1,5 +1,6 @@
-import java.util.Random;
 import java.util.Arrays;
+import java.util.Random;
+import java.security.SecureRandom;
 
 enum Algo {
     ARRAYS_SORT
@@ -17,11 +18,11 @@ public class Main {
         }
         int interval = Integer.valueOf(args[1]);
         int maxN = Integer.valueOf(args[2]);
-        Random rd = new Random();
+        Random rd = new SecureRandom();
         for (int n = interval; n < maxN; n += interval) {
             int[] arr = new int[n];
             for (int i = 0; i < arr.length; i++) {
-                arr[i] = rd.nextInt();
+                arr[i] = rd.nextInt(Integer.MAX_VALUE);
             }
 
             long start_ns = System.nanoTime();

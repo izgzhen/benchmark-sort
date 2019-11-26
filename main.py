@@ -14,8 +14,13 @@ max_n = int(sys.argv[3])
 
 MAX_INT = 2**32
 
+sysrand = random.SystemRandom()
+
+start_time = time.time()
 for n in range(interval, max_n, interval):
-    xs = [random.randint(0, MAX_INT) for _ in range(n)]
+    xs = [sysrand.randint(0, MAX_INT) for _ in range(n)]
     now = time.time()
     _ = sorted(xs)
     print(str(n) + " " + str((time.time() - now) * 1e6))
+    if time.time() - start_time > 300:
+        break

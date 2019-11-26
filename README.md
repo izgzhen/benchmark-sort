@@ -29,7 +29,9 @@ From our [benchmark](explore.ipynb), it seems that the complexity of all algorit
 
 Why?
 
+NOTE:
 
+- All random numbers are real random (`random_device`, `SecureRandom` and `SystemRandom`).
 
 ## C++11
 

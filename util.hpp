@@ -5,6 +5,7 @@
 #include <vector>
 #include "assert.h"
 #include <chrono>
+#include <random>
 #include "stdlib.h"
 
 using namespace std::chrono;
@@ -23,9 +24,13 @@ private:
 };
 
 std::vector<int> getRandIntList(int N) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, INT_MAX);
+
     std::vector<int> ret;
     for (int i = 0; i < N; i++) {
-        ret.push_back(rand());
+        ret.push_back(dis(gen));
     }
     return ret;
 }
