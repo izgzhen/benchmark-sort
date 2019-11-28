@@ -35,6 +35,14 @@ std::vector<int> getRandIntList(int N) {
     return ret;
 }
 
+std::vector<int> getReversedIntList(int N) {
+    std::vector<int> ret;
+    for (int i = 0; i < N; i++) {
+        ret.push_back(N - i);
+    }
+    return ret;
+}
+
 template <class T>
 static T read(const char* value) {
     std::istringstream stream(value);

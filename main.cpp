@@ -15,6 +15,7 @@ int main(int argc, char* argv[]) {
     std::string algo_opt(argv[1]);
     int interval = read<int>(argv[2]);
     int max_n = read<int>(argv[3]);
+    std::string dist_opt(argv[4]);
     ALGO algo;
     if (algo_opt == "stdsort") {
         algo = STDSORT;
@@ -27,8 +28,15 @@ int main(int argc, char* argv[]) {
         exit(-1);
     }
     for (int n = interval; n < max_n; n += interval) {
-        // std::vector<float> nums = getRandList(n);
-        std::vector<int> nums = getRandIntList(n);
+        std::vector<int> nums;
+        if (dist_opt == "uniform-random") {
+            nums = getRandIntList(n);
+        } else if (dist_opt == "reversed") {
+            nums = getReversedIntList(n);
+        } else {
+            std::cerr << "Invalid dist_opt: " << dist_opt << "\n";
+            exit(-1);
+        }
         Timer t;
         switch (algo) {
             case STDSORT:

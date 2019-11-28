@@ -18,11 +18,21 @@ public class Main {
         }
         int interval = Integer.valueOf(args[1]);
         int maxN = Integer.valueOf(args[2]);
+        String distOpt = args[3];
         Random rd = new SecureRandom();
         for (int n = interval; n < maxN; n += interval) {
             int[] arr = new int[n];
-            for (int i = 0; i < arr.length; i++) {
-                arr[i] = rd.nextInt(Integer.MAX_VALUE);
+            if (distOpt.equals("uniform-random")) {
+                for (int i = 0; i < arr.length; i++) {
+                    arr[i] = rd.nextInt(Integer.MAX_VALUE);
+                }
+            } else if (distOpt.equals("reversed")) {
+                for (int i = 0; i < arr.length; i++) {
+                    arr[i] = arr.length - i;
+                }
+            } else {
+                System.err.println("Invalid distOpt: " + distOpt);
+                System.exit(-1);
             }
 
             long start_ns = System.nanoTime();
