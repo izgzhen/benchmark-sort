@@ -25,7 +25,8 @@ From our [benchmark](explore.ipynb), it seems that the complexity of all algorit
 
 ![](c++11.png)
 ![](java8.png)
-![](python3.png)
+
+<!-- ![](python3.png) -->
 
 Why?
 
