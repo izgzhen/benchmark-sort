@@ -28,7 +28,7 @@ From our first version of [benchmark](explore.ipynb), it seems that the complexi
 
 Updated 3 weeks after the initialization of this post.
 
-Since it is *very difficult* to observe the non-linearity required by O(nlogn), but after I processed the "time spent" into "log of time spent per element", i.e. measuring the relationship between N and log(t / N), it becomes what we thought it should be -- even if the actual "skew" is very minor.
+Since it is *very difficult* to observe the non-linearity required by O(nlogn), but after I converted the "time spent" into "log of time spent per element", i.e. measuring the relationship between N and t / N, it becomes what we thought it should be -- even if the actual "skew" is very minor.
 
 ![](c++11-stdsort-ii.png)
 ![](c++11-qsort-ii.png)
