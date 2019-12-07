@@ -5,15 +5,9 @@ The task is to sort a vector/array of (pseudo-)randomly generated integers using
 
 The current (counter-intuitive) observation is that **the complexity of all standard sort algorithms has a O(n) complexity**.
 
-1. I am suspicious about the correctness of my benchmark code, but can't find anything wrong with it (if you do, please point it out in issues!)
-2. I am investigating this problem in a slow pace, and will keep this document updated until I know what is going wrong.
-3. You are welcomed to try out the benchmark code on your machine, discuss about potential reason why this happened, and maybe even contribute additional experiments!
+Note that I think it is insufficient to solely rely on the theoretical worse case for pseudo-code, since (1) modern hardware plus complicated hybrid algorithm engineering can produce very different thing than what you imagine (2) in production, the data distribution is not always the worst case, sometimes much better.
 
-We all thought that as working programmers, we understand `sort`, but we *might not*. This is why I am motivated to investigate this.
-
-Note that I didn't care a lot about theoretical worse case for pseudo-code, since (1) modern hardware plus complicated hybrid algorithm engineering can produce very different thing than what you imagine (2) in production, the data distribution is not always the worst case, sometimes much better.
-
-## Results
+## Reference Complexities
 
 |       | std::sort                                           | Arrays.sort                                                  | sorted                                            |
 | ----- | --------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------- |
@@ -21,20 +15,32 @@ Note that I didn't care a lot about theoretical worse case for pseudo-code, sinc
 | Avg   | [O(nlogn)](https://en.wikipedia.org/wiki/Introsort) | ?                                                            | [O(nlogn)](https://en.wikipedia.org/wiki/Timsort) |
 | Worst | [O(nlogn)](https://en.wikipedia.org/wiki/Introsort) | [O(nlogn)](https://www.quora.com/What-is-the-complexity-of-Arrays-sort-in-java-Also-why-isn%E2%80%99t-it-as-efficient-as-quick-sort-in-C-or-C++) | [O(nlogn)](https://en.wikipedia.org/wiki/Timsort) |
 
-From our [benchmark](explore.ipynb), it seems that the complexity of all algorithms is O(n), rather than the claimed complexities:
 
-![](c++11.png)
-![](java8.png)
+## Results I
 
-<!-- ![](python3.png) -->
+From our first version of [benchmark](explore.ipynb), it seems that the complexity of all algorithms is O(n), rather than the claimed complexities:
 
-Why?
+![](c++11-stdsort.png)
+![](c++11-qsort.png)
+![](java8-arrays-sort.png)
 
-NOTE:
+## Results II
 
-- All random numbers are real random (`random_device`, `SecureRandom` and `SystemRandom`).
+Updated 3 weeks after the initialization of this post.
 
-## C++11
+Since it is *very difficult* to observe the non-linearity required by O(nlogn), but after I processed the "time spent" into "log of time spent per element", i.e. measuring the relationship between N and log(t / N), it becomes what we thought it should be -- even if the actual "skew" is very minor.
+
+![](c++11-stdsort-ii.png)
+![](c++11-qsort-ii.png)
+![](java8-arrays-sort-ii.png)
+
+## Setup and Background
+
+All random numbers are real random (`random_device`, `SecureRandom` and `SystemRandom`).
+
+Note that in the latest experiments, Python and my QuickSort baselines are removed since they are too slow in constant factor.
+
+### C++11
 
 Three algorithms are benchmarked: (1) `std::sort` from STL `<algorithms>` (2) `qsort` from `cstdlib`, and (3) `quickSortBaseline` written by myself:
 
@@ -50,13 +56,13 @@ Since I am using Clang on a Mac, I think that the `qsort` I used is compiled fro
 
 About `quickSortBaseline`, it is [here](./quicksort.hpp), nothing magic.
 
-## Java8
+### Java8
 
 From [this post](https://www.quora.com/What-is-the-complexity-of-Arrays-sort-in-java-Also-why-isn%E2%80%99t-it-as-efficient-as-quick-sort-in-C-or-C++):
 
 > It (`Arrays.sort`) uses dual-pivot quicksort for primitives, which though better than a standard quicksort could still degrade into a quadratic running time.
 
-## Python3
+### Python3
 
 From [this post](https://stackoverflow.com/questions/10948920/what-algorithm-does-pythons-sorted-use):
 
@@ -85,9 +91,6 @@ I should not be the first one who observed this. Here are some related posts:
     - I didn't read through the comments, but it seems like there is a lot of materials there
 - [C++ benchmark – std::vector VS std::list VS std::deque](https://baptiste-wicht.com/posts/2012/12/cpp-benchmark-vector-list-deque.html) by Baptiste Wicht
     - The section about "Sort" seems confirming my observation, but no discussion is given.
-- 
-
-
 
 ## Further Readings
 
